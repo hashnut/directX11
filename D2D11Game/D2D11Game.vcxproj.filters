@@ -3,9 +3,14 @@
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Window.h" />
+    <ClInclude Include="Graphics.h" />
+    <ClInclude Include="settings.h" />
+    <ClInclude Include="Execute.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Program.cpp" />
+    <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="Execute.cpp" />
   </ItemGroup>
 </Project>

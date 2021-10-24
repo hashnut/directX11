@@ -27,7 +27,7 @@ namespace Window
 		}
 
 		return 0;
-			
+
 	}
 
 	inline void Create(HINSTANCE hInstance, const UINT& width, const UINT& height)
@@ -69,7 +69,7 @@ namespace Window
 
 	inline void Show()
 	{
-		SetForegroundWindow(global_handle); 
+		SetForegroundWindow(global_handle);
 		SetFocus(global_handle);
 		ShowCursor(TRUE);
 		ShowWindow(global_handle, SW_NORMAL); // 윈도우 실제로 보여줌

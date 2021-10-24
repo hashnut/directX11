@@ -6,42 +6,44 @@ namespace Window
 	static HINSTANCE global_instance;
 	static HWND global_handle;
 
+	// CALLBACK 함수는 다른 코드의 인수로서 넘겨줄 수 있는 실행 가능한 코드를 의미한다
 	inline LRESULT CALLBACK WndProc
 	(
 		HWND handle,
-		uint message,
+		UINT message,
 		WPARAM wParam,
 		LPARAM lParam
 	)
 	{
-		switch (message)
-		{
+		switch (message) {
 		case WM_CLOSE:
 		case WM_DESTROY:
 			PostQuitMessage(0);
 			break;
+
 
 		default:
 			return DefWindowProc(handle, message, wParam, lParam);
 		}
 
 		return 0;
+			
 	}
 
-	inline void Create(HINSTANCE hInstance, const uint& width, const uint& height)
+	inline void Create(HINSTANCE hInstance, const UINT& width, const UINT& height)
 	{
 		WNDCLASSEX wnd_class;
 		wnd_class.cbClsExtra = 0;
 		wnd_class.cbWndExtra = 0;
 		wnd_class.hbrBackground = static_cast<HBRUSH>(GetStockObject(WHITE_BRUSH));
-		wnd_class.hCursor = LoadCursor(nullptr, IDC_ARROW);
-		wnd_class.hIcon = LoadIcon(nullptr, IDI_ERROR);
+		wnd_class.hCursor = LoadCursor(nullptr, IDC_ARROW); // 커서 타입
+		wnd_class.hIcon = LoadIcon(nullptr, IDI_ERROR); // 아이콘 타입
 		wnd_class.hIconSm = LoadIcon(nullptr, IDI_ERROR);
 		wnd_class.hInstance = hInstance;
-		wnd_class.lpfnWndProc = WndProc;
+		wnd_class.lpfnWndProc = WndProc; // CALLBACK 함수가 아니면 에러가 뜬다.
 		wnd_class.lpszClassName = L"D2D11Game";
 		wnd_class.lpszMenuName = nullptr;
-		wnd_class.style = CS_HREDRAW | CS_VREDRAW;
+		wnd_class.style = CS_HREDRAW | CS_VREDRAW; // HORIZONTAL REDRAW, VERTICAL REDRAW
 		wnd_class.cbSize = sizeof(WNDCLASSEX);
 
 		auto check = RegisterClassEx(&wnd_class);
@@ -50,7 +52,7 @@ namespace Window
 		global_handle = CreateWindowExW
 		(
 			WS_EX_APPWINDOW,
-			L"D2D11Game", 
+			L"D2D11Game",
 			L"D2D11Game",
 			WS_OVERLAPPEDWINDOW,
 			CW_USEDEFAULT,
@@ -67,12 +69,13 @@ namespace Window
 
 	inline void Show()
 	{
-		SetForegroundWindow(global_handle);
+		SetForegroundWindow(global_handle); 
 		SetFocus(global_handle);
 		ShowCursor(TRUE);
-		ShowWindow(global_handle, SW_NORMAL);
+		ShowWindow(global_handle, SW_NORMAL); // 윈도우 실제로 보여줌
 		UpdateWindow(global_handle);
 	}
+
 
 	inline const bool Update()
 	{
@@ -94,19 +97,17 @@ namespace Window
 		UnregisterClass(L"D2D11Game", global_instance);
 	}
 
-	inline const uint GetWidth()
+	inline const UINT GetWidth()
 	{
 		RECT rect;
 		GetClientRect(global_handle, &rect);
-
-		return static_cast<uint>(rect.right - rect.left);
+		return static_cast<UINT>(rect.right - rect.left);
 	}
 
-	inline const uint GetHeight()
+	inline const UINT GetHeight()
 	{
 		RECT rect;
 		GetClientRect(global_handle, &rect);
-
-		return static_cast<uint>(rect.bottom - rect.top);
+		return static_cast<UINT>(rect.bottom - rect.top);
 	}
 }
