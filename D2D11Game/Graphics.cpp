@@ -153,5 +153,5 @@ void Graphics::End()
 
 // ID3D11Buffer : 구조체를 만들어 넘기는 자원(Buffer)		ID3D11Texture1D, ID3D11Texture2D, ID3D11Texture3D : 이미지화된 자원(Texture)
 
-//												// Resource View : Texture 자원의 사용 용도를 명확히 해주는 개념
-												// - ID3D11RenderTargetView(화면 그리기), ID3D11ShaderResourceView(이미 만들어진 이미지 넘기기), ID3D11DepthStencilView(깊이 관련...), ID3D11UnorderedAccessView(읽고 쓰기가 다 된다)
+// Resource View : Texture 자원의 사용 용도를 명확히 해주는 개념
+// - ID3D11RenderTargetView(화면 그리기), ID3D11ShaderResourceView(이미 만들어진 이미지 넘기기), ID3D11DepthStencilView(깊이 관련...), ID3D11UnorderedAccessView(읽고 쓰기가 다 된다)
