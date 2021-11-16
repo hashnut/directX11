@@ -7,6 +7,22 @@ struct VertexColor
 
 };
 
+struct VertexTexture
+{
+	D3DXVECTOR3 position;
+	D3DXVECTOR2 uv; // Texture Coordinate
+};
+
+
+struct TRANSFORM_DATA
+{
+	// D3DXMATRIX : 4X4 float 행렬
+	// 행렬은 항상 단위행렬로 초기화해야 한다.
+	D3DXMATRIX world; // 4X4
+	D3DXMATRIX view;
+	D3DXMATRIX projection;
+};
+
 class Execute final
 {
 public:
@@ -21,7 +37,7 @@ private:
 
 	// VertexColor는 우리가 만든 데이터... Ram에 들어감.
 	
-	VertexColor* vertices = nullptr;
+	VertexTexture* vertices = nullptr;
 
 	// CPU 자원을 GPU에 입력하기 위해 변환해야 한다!
 	ID3D11Buffer* vertex_buffer = nullptr;
@@ -40,6 +56,46 @@ private:
 
 	ID3D11PixelShader* pixel_shader = nullptr;
 	ID3DBlob* ps_blob = nullptr;
+
+	// D3DXMATRIX : 4X4 float 행렬
+	// 행렬은 항상 단위행렬로 초기화해야 한다.
+	D3DXMATRIX world; // 4X4
+	D3DXMATRIX view;
+	D3DXMATRIX projection;
+
+	/*
+	1 0 0 0	// x
+	0 1 0 0	// y
+	0 0 1 0	// z
+	0 0 0 1	// 동차가 1이면 위치를 의미 (위치가 변경되면 0 0 0 부분이 바뀐다.)
+
+	y    z
+	^   /
+	|  /
+	| /
+	|------> x
+	(0, 0, 0)
+	: x, y, z 축으로 1만큼 가는, 위치가 (0, 0, 0)인 방향벡터
+
+	OpenGL - RH (Right Hand)좌표계
+	DirectX - LH (Left Hand)좌표계
+
+	*/
+
+	TRANSFORM_DATA cpu_buffer;
+	ID3D11Buffer* gpu_buffer = nullptr; // Constant Buffer (상수 버퍼)
+
+	ID3D11RasterizerState* rasterizer_state = nullptr;
+
+	ID3D11ShaderResourceView* shader_resource = nullptr;
+
+	// Texture
+	// ID3D11Texture3D
+	// RTV : OM
+	// DSV : OM
+	// SRV : ID3D11ShaderResourceView : 텍스쳐 데이터를 읽기만 할 수 있는 자원 뷰
+	// UAV : 
+
 };
 
 // Rendering Pipeline : 렌더링을 하기 위해 수행되어야 하는 단계들
@@ -64,6 +120,9 @@ private:
 // - NDC : Normalized Device Coordinate : 화면에 맞게 늘려짐
 // NDC - Euclidean space 
 // Viewport : 정규화된 크기를 다시 Rasterized된 크기로 변환해 줌
-
+// Clipping
+// Back-face Culling - 보이지 않는 면을 제거하는 것
+// Viewport Transform - Viewport 사이즈 조정
+// Scan Transform - Pixel Shader가 그려할 영역을 지정해준다
 
 

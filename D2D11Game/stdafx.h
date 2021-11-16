@@ -17,6 +17,7 @@
 
 // STL	
 #include <vector>
+#include <iostream>
 
 // 라이브러리를 연결하는 전처리기 코드의 표현
 #pragma comment(lib, "dxgi.lib")

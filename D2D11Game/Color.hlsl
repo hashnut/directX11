@@ -13,13 +13,31 @@ struct PixelInput
 	float4 color : COLOR0;
 };
 
+// cbuffer : Constant buffer
+cbuffer TransformBuffer : register(b0) // -> 0 ~ 13 (슬롯 번호) // (4096 *) 16 byte 단위로 정렬해야 한다.
+{
+	matrix world;
+	matrix view;
+	matrix proj;
+}
+
+
 PixelInput VS(VertexInput input)
 {
+	// 1 X 4			4 X 4	----> 1 X 4
+	// 1, 2, 3, 1	*	0000
+	//					0000
+	//					0000
+	//					0000
+	
 	PixelInput output;
 
-	output.position = input.position;
+	// 위치 변환할 때 행렬을 곱해주면 된다!
+	output.position = mul(input.position, world);
+	output.position = mul(output.position, view);
+	output.position = mul(output.position, proj);
 	output.color = input.color;
-
+	
 	return output;
 }
 

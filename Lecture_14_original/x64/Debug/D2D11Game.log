@@ -1,0 +1,9 @@
+﻿  Execute.cpp
+C:\Users\ejrrb10\OneDrive - SNU\github\directX11\Lecture_14\stdafx.h(18,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'D3DX10math.h': No such file or directory
+  Graphics.cpp
+C:\Users\ejrrb10\OneDrive - SNU\github\directX11\Lecture_14\stdafx.h(18,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'D3DX10math.h': No such file or directory
+  Program.cpp
+C:\Users\ejrrb10\OneDrive - SNU\github\directX11\Lecture_14\stdafx.h(18,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'D3DX10math.h': No such file or directory
+  stdafx.cpp
+C:\Users\ejrrb10\OneDrive - SNU\github\directX11\Lecture_14\stdafx.h(18,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'D3DX10math.h': No such file or directory
+  코드를 생성하고 있습니다...

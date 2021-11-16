@@ -137,7 +137,12 @@ Execute::Execute()
 		D3DXMatrixIdentity(&view);
 		D3DXMatrixIdentity(&projection);
 
-		D3DXMatrixLookAtLH(&view, &D3DXVECTOR3(0, 0, 0), &D3DXVECTOR3(0, 0, 1), &D3DXVECTOR3(0, 1, 0));
+
+		D3DXVECTOR3 pEye(0, 0, 0);
+		D3DXVECTOR3 pAt(0, 0, 1);
+		D3DXVECTOR3 pUp(0, 1, 0);
+
+		D3DXMatrixLookAtLH(&view, &pEye, &pAt, &pUp);
 		D3DXMatrixOrthoLH(&projection, Settings::Get().GetWidth(), Settings::Get().GetHeight(), 0, 1);
 		//D3DXMatrixOrthoOffCenterLH(&view, 0, Settings::Get().GetWidth(), 0, Settings::Get().GetHeight(), 0, 1);
 
@@ -238,7 +243,7 @@ Execute::Execute()
 
 	//Create Shader Resource View
 	{
-		/*auto hr = D3DX11CreateShaderResourceViewFromFileA
+	/*	auto hr = D3DX11CreateShaderResourceViewFromFileA
 		(
 			graphics->GetDevice(),
 			"Tree.png",
@@ -277,9 +282,9 @@ Execute::Execute()
 	{
 		D3D11_SAMPLER_DESC desc;
 		ZeroMemory(&desc, sizeof(D3D11_SAMPLER_DESC));
-		desc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
-		desc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
-		desc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
+		desc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+		desc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+		desc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
 		desc.BorderColor[0] = 1;
 		desc.BorderColor[1] = 0;
 		desc.BorderColor[2] = 0;
@@ -303,6 +308,7 @@ Execute::~Execute()
 	//SAFE_RELEASE(shader_resource[1]);
 	//SAFE_RELEASE(shader_resource[0]);
 
+	//SAFE_RELEASE(shader_resource[2]);
 	SAFE_RELEASE(shader_resource);
 
 	SAFE_RELEASE(rasterizer_state);
@@ -395,6 +401,7 @@ void Execute::Render()
 		//PS
 		graphics->GetDeviceContext()->PSSetShader(pixel_shader, nullptr, 0);
 		graphics->GetDeviceContext()->PSSetShaderResources(0, 1, &shader_resource);
+
 		graphics->GetDeviceContext()->PSSetSamplers(0, 1, &sampler_state);
 
 		graphics->GetDeviceContext()->DrawIndexed(6, 0, 0);

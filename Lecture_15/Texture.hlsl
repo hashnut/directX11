@@ -42,19 +42,19 @@ SamplerState samp        : register(s0); //16 -> 0 ~ 15
 
 float4 PS(PixelInput input) : SV_Target
 {
-    //float4 color = 0.0f;
+	//float4 color = 0.0f;
 
-    //if(input.uv.x < 1.0f)
-    //    color = source_texture1.Sample(samp, input.uv);
-    //else
-    //    color = source_texture2.Sample(samp, float2(input.uv.x - 1.0f, input.uv.y));
+	//if (input.uv.x < 1.0f)
+	//	color = source_texture1.Sample(samp, input.uv);
+	//else
+	//	color = source_texture2.Sample(samp, float2(input.uv.x - 1.0f, input.uv.y));
 
 
     //clip(color.a - 0.9f);
     //if(color.a < 0.1f)
     //    discard;
 
-    float4 color = source_texture1.Sample(samp, input.uv);
+	float4 color = source_texture1.Sample(samp, input.uv);
 
     return color;
 }
